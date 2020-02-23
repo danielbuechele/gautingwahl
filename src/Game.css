@@ -11,7 +11,7 @@ button.skip {
   position: absolute;
   bottom: 20px;
   left: 50%;
-  margin-left: -60px;
+  transform: translateX(-50%) scale(1);
 }
 
 button.skip:hover {
@@ -20,5 +20,5 @@ button.skip:hover {
 }
 
 button.skip:active {
-  transform: scale(0.95);
+  transform: translateX(-50%) scale(0.95);
 }

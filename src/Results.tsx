@@ -28,7 +28,7 @@ export default function Results(props: { data: Data }) {
           return sum;
         }, 0) / total
     }))
-    .sort((a, b) => a.percentage - b.percentage);
+    .sort((a, b) => b.percentage - a.percentage);
 
   return (
     <>
@@ -37,8 +37,8 @@ export default function Results(props: { data: Data }) {
         <ol>
           {results.map(({ party, percentage }) => (
             <li key={party} className="ResultRow">
-              <img src={LOGOS.get(party)} alt={`Logo ${party}`} width="40" />
-              <strong>{party}</strong>
+              <img src={LOGOS.get(party)} alt={`Logo ${party}`} />
+              <strong className="partyName">{party}</strong>
               {Math.round(percentage * 100)}%
             </li>
           ))}
@@ -50,33 +50,29 @@ export default function Results(props: { data: Data }) {
           {props.data.questions.map((q, i) => (
             <li key={i}>
               <h3>
-                {i + 1}. {q.question}
+                {i + 1}) {q.question}
               </h3>
               <ul>
-                <li>
+                <li className="answer">
                   <AnswerEmoji value={answers[i]} />
-                  &nbsp;
-                  <strong>Deine Stimme</strong>
+                  <strong>Deine Antwort</strong>
                 </li>
                 {Object.values(Party).map(party => (
                   <li
                     key={party}
-                    className={
+                    className={`answer ${
                       q.answers[party].answer !== answers[i] ? "different" : ""
-                    }
+                    }`}
                   >
+                    <AnswerEmoji value={q.answers[party].answer} />
                     <div>
-                      <AnswerEmoji value={q.answers[party].answer} />
-                      &nbsp;
-                      {party}
-                      <div className="spacer" />
-                      {q.answers[party].explanaition && (
-                        <button className="explain" onClick={() => {}}>
-                          Erklärung
-                        </button>
+                      <strong>{party}</strong>
+                      {q.answers[party].explanation && (
+                        <span className="explanation">
+                          {q.answers[party].explanation}
+                        </span>
                       )}
                     </div>
-                    <p>{q.answers[party].explanaition}</p>
                   </li>
                 ))}
               </ul>

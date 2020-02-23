@@ -34,7 +34,9 @@ export default function Welcome(props: { total: number }) {
         <button onClick={onNext} className="primary">
           {restart ? "Neustarten" : "Los geht's"}
         </button>
-        {restart && <button onClick={onNext}>Ergebnis</button>}
+        {restart && (
+          <button onClick={() => history.push(Screen.RESUTLS)}>Ergebnis</button>
+        )}
       </div>
     </Card>
   );

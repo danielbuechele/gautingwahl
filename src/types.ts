@@ -27,15 +27,17 @@ export enum Screen {
   QUESTION = "/these"
 }
 
+export type AnswerGroup = {
+  [key in Party]: {
+    answer: Answer;
+    explanation: string | null;
+  };
+};
+
 export type Data = {
   questions: Array<{
     question: string;
     tags: Tag[];
-    answers: {
-      [key in Party]: {
-        answer: Answer;
-        explanaition: string | null;
-      };
-    };
+    answers: AnswerGroup;
   }>;
 };

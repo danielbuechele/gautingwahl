@@ -31,11 +31,8 @@
   opacity: 0.5;
 }
 
-.Results button.explain {
-  font-size: 0.9em;
-  padding: 5px 10px;
-  margin: 0;
-  margin-left: auto;
+.Results .partyName {
+  flex-grow: 1;
 }
 
 .ResultRow {
@@ -43,15 +40,28 @@
   flex-direction: row;
   align-items: center;
   font-size: 1.3em;
+  height: 50px;
 }
 
 .ResultRow img {
   margin-right: 10px;
   width: 50px;
-  height: 50px;
-  object-fit: contain;
 }
 
-.ResultRow strong {
-  flex-grow: 1;
+.Results .answer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+}
+
+.Results .answer .explanation::before {
+  content: ": ";
+}
+
+.Results .answer .emoji {
+  flex-shrink: 0;
+  position: relative;
+  top: -0.2em;
+  font-size: 1.3em;
+  width: 1.3em;
 }
