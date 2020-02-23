@@ -3,15 +3,17 @@ import { Answer, Tag } from "./types";
 import Card from "./Card";
 import useThrowawayCard from "./useThrowawayCard";
 import "./GameCard.css";
+import AnswerEmoji from "./AnswerEmoji";
 
 export default function GameCard(props: {
   number: number;
   total: number;
   question: string;
   tags: Tag[];
+  value: Answer;
   onNext: (answer: Answer) => void;
 }) {
-  const { onNext } = props;
+  const { onNext, value } = props;
   const {
     handlers,
     style,
@@ -40,19 +42,25 @@ export default function GameCard(props: {
       <div>
         <button
           onClick={() => setResultProgrammatically(Answer.NEGATIVE)}
-          className={result === Answer.NEGATIVE ? "negative-active" : ""}
+          className={
+            (value === Answer.NEGATIVE && result === null) ||
+            result === Answer.NEGATIVE
+              ? "negative-active"
+              : ""
+          }
         >
-          <span role="img" aria-label="Stimme nicht zu">
-            👎
-          </span>
+          <AnswerEmoji value={Answer.NEGATIVE} />
         </button>
         <button
           onClick={() => setResultProgrammatically(Answer.POSITIVE)}
-          className={result === Answer.POSITIVE ? "positive-active" : ""}
+          className={
+            (value === Answer.POSITIVE && result === null) ||
+            result === Answer.POSITIVE
+              ? "positive-active"
+              : ""
+          }
         >
-          <span role="img" aria-label="Stimme zu">
-            👍
-          </span>
+          <AnswerEmoji value={Answer.POSITIVE} />
         </button>
       </div>
     </Card>

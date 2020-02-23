@@ -8,10 +8,9 @@
   display: flex;
   flex-direction: column;
   max-width: 600px;
-  min-width: 300px;
+  width: 90vw;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, calc(-50% - 70px));
 }
 
 .Card h2 {
@@ -21,7 +20,7 @@
 
 .Card p {
   font-size: 1.3em;
-  padding: 15px;
+  padding: 15px 20px;
   padding-top: 0;
 }
 
@@ -34,14 +33,26 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 1em;
-  margin: 15px;
+  margin: 0 5px 30px;
   align-self: center;
+  transition: 150ms all ease-out;
+}
+
+.Card button.primary {
+  border-color: #6ace97;
+  background-color: #6ace97;
+  color: white;
+}
+
+.Card button.primary:hover,
+.Card button.primary:active {
+  border-color: #5db886;
+  background-color: #5db886;
 }
 
 .Card button:hover,
 .Card button:active {
   background-color: #e5e5e5;
-  transition: 0.1s all ease-out;
 }
 
 .Card button:active {

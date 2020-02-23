@@ -20,6 +20,13 @@ export enum Answer {
   NEUTRAL
 }
 
+export enum Screen {
+  START = "/",
+  INFO = "/info",
+  RESUTLS = "/results",
+  QUESTION = "/these"
+}
+
 export type Data = {
   questions: Array<{
     question: string;

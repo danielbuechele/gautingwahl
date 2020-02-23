@@ -1,39 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import Menubar from "./Menubar";
 import Game from "./Game";
 import Results from "./Results";
-import { Answer, Data } from "./types";
+import { Data, Screen } from "./types";
 import Welcome from "./Welcome";
+import Info from "./Info";
+import { Switch, Route } from "react-router-dom";
 const data: Data = require("./data.json");
 
-type Screen = "START" | "GAME" | "RESULTS";
-
 function App() {
-  const [answers, setAnswers] = useState<Answer[] | null>(null);
-  const [screen, setScreen] = useState<Screen>("START");
-
   return (
-    <div className={`App ${screen === "GAME" && "inGame"}`}>
+    <div className="App">
       <Menubar />
-      {screen === "START" && (
-        <Welcome
-          total={data.questions.length}
-          onNext={() => setScreen("GAME")}
-        />
-      )}
-      {screen === "RESULTS" && answers && (
-        <Results data={data} answers={answers} />
-      )}
-      {screen === "GAME" && (
-        <Game
-          data={data}
-          onFinished={answers => {
-            setAnswers(answers);
-            setScreen("RESULTS");
-          }}
-        />
-      )}
+      <Switch>
+        <Route path={Screen.INFO}>
+          <Info />
+        </Route>
+        <Route path={Screen.RESUTLS}>
+          <Results data={data} />
+        </Route>
+        <Route path={Screen.QUESTION}>
+          <Game data={data} />
+        </Route>
+        <Route path={Screen.START}>
+          <Welcome total={data.questions.length} />
+        </Route>
+      </Switch>
     </div>
   );
 }

@@ -18,20 +18,15 @@ export default React.forwardRef(
     ref: React.Ref<HTMLDivElement>
   ) => {
     const { children, className, style, ...rest } = props;
-
     const isMounted = useIsMounted();
 
+    const styles = {
+      ...style,
+      opacity: isMounted ? 1 : 0
+    };
+
     return (
-      <div
-        className={`Card ${className}`}
-        ref={ref}
-        style={{
-          ...style,
-          opacity: isMounted ? 1 : 0,
-          transform: (style?.transform || "") + ` scale(${isMounted ? 1 : 0.3})`
-        }}
-        {...rest}
-      >
+      <div className={`Card ${className}`} ref={ref} style={styles} {...rest}>
         {props.children}
       </div>
     );

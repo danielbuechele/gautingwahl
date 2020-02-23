@@ -1,8 +1,9 @@
 import { useSwipeable, EventData } from "react-swipeable";
 import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { Answer } from "./types";
+import useIsMounted from "./useIsMounted";
 
-type Result = "GO_BACK" | Answer.POSITIVE | Answer.NEGATIVE;
+type Result = null | Answer.POSITIVE | Answer.NEGATIVE;
 
 function clamp(num: number, min: number, max: number): number {
   return num <= min ? min : num >= max ? max : num;
@@ -37,10 +38,10 @@ export default function useThrowawayCard(config: {
   const [swipeEvent, setSwipeEvent] = useState<EventData | null>(null);
   const [translateDuration, setTranslateDuration] = useState(200);
   const [isSwiping, setIsSwiping] = useState(false);
-  const [result, setResult] = useState<Result>("GO_BACK");
+  const [result, setResult] = useState<Result>(null);
   useEffect(() => {
     const onBlur = () => {
-      setResult("GO_BACK");
+      setResult(null);
       setDeltaX(0);
       setDeltaY(0);
       setIsSwiping(false);
@@ -50,6 +51,8 @@ export default function useThrowawayCard(config: {
       window.removeEventListener("blur", onBlur);
     };
   }, []);
+
+  const isMounted = useIsMounted();
 
   const handlers = useSwipeable({
     delta: 0,
@@ -64,7 +67,7 @@ export default function useThrowawayCard(config: {
       if (Math.abs(deltaX) > config.threshold) {
         setResult(deltaX < 0 ? Answer.POSITIVE : Answer.NEGATIVE);
       } else {
-        setResult("GO_BACK");
+        setResult(null);
       }
     },
     onSwiped: e => {
@@ -85,7 +88,7 @@ export default function useThrowawayCard(config: {
       return;
     }
     setSwipeEvent(null);
-    if (result === "GO_BACK") {
+    if (result === null) {
       setDeltaX(0);
       setDeltaY(0);
     } else {
@@ -128,7 +131,7 @@ export default function useThrowawayCard(config: {
     transform: `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px)) rotate(${getRotation(
       deltaX,
       config.threshold
-    )}deg)`,
+    )}deg) scale(${isMounted ? 1 : 0.3})`,
     transition: getTransitions([
       { property: "box-shadow", duration: 200 },
       { property: "transform", duration: isSwiping ? 0 : translateDuration },

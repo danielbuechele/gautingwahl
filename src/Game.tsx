@@ -1,28 +1,29 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import "./Game.css";
 import GameCard from "./GameCard";
-import { Answer, Data } from "./types";
+import AnswerEmoji from "./AnswerEmoji";
+import { Answer, Data, Screen } from "./types";
+import { useRouteMatch, useHistory } from "react-router-dom";
+import { useAnswer } from "./useAnswers";
 
-export default function Game(props: {
-  data: Data;
-  onFinished: (answers: Answer[]) => void;
-}) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const answers = useRef<Answer[]>([]);
+export default function Game(props: { data: Data }) {
   const total = props.data.questions.length;
-  const { onFinished } = props;
-
+  const match = useRouteMatch<{ id: string }>(Screen.QUESTION + "/:id");
+  const currentQuestion = parseInt(match?.params.id || "1", 10) - 1;
+  const [answer, setAnswer] = useAnswer(currentQuestion);
+  const history = useHistory();
   const onNext = useCallback(
     (answer: Answer) => {
-      answers.current[currentQuestion] = answer;
+      setAnswer(answer);
       if (currentQuestion < total - 1) {
-        setCurrentQuestion(currentQuestion + 1);
+        history.push(Screen.QUESTION + `/${currentQuestion + 2}`);
       } else {
-        onFinished(answers.current);
+        history.push(Screen.RESUTLS);
       }
     },
-    [currentQuestion, total, onFinished]
+    [setAnswer, currentQuestion, total, history]
   );
+
   return (
     <>
       <GameCard
@@ -32,9 +33,17 @@ export default function Game(props: {
         total={total}
         question={props.data.questions[currentQuestion].question}
         tags={props.data.questions[currentQuestion].tags}
+        value={answer}
       />
-      <button className="skip" onClick={() => onNext(Answer.NEUTRAL)}>
-        überspringen
+      <button
+        className="skip"
+        onClick={() => {
+          setAnswer(Answer.NEUTRAL);
+          setTimeout(() => onNext(Answer.NEUTRAL), 300);
+        }}
+      >
+        <AnswerEmoji value={Answer.NEUTRAL} />
+        These überspringen
       </button>
     </>
   );

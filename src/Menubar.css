@@ -16,6 +16,34 @@
 }
 
 .Menubar h1 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
+}
+
+.Menubar h1 em {
+  font-weight: 300;
+  font-style: normal;
+  color: #f05e6c;
+  padding-left: 1px;
+}
+
+.Menubar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Menubar .nav {
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid #e5e5e5;
+  border-radius: 999em;
+  font-weight: bold;
+  padding: 4px 20px 5px;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.Menubar .nav:hover {
+  background-color: #e5e5e5;
 }
