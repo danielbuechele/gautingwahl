@@ -33,7 +33,7 @@ function getTransitions(
   transitions: Array<{ property: string; duration: number }>
 ): string {
   return transitions
-    .map(({ property, duration }) => `${property} ${duration}s`)
+    .map(({ property, duration }) => `${property} ${duration}ms`)
     .join(", ");
 }
 
@@ -49,7 +49,7 @@ export default function GameCard(props: {
   const [deltaX, setDeltaX] = useState(0);
   const [deltaY, setDeltaY] = useState(0);
   const [swipeEvent, setSwipeEvent] = useState<EventData | null>(null);
-  const [translateDuration, setTranslateDuration] = useState(0.2);
+  const [translateDuration, setTranslateDuration] = useState(200);
   const [isSwiping, setIsSwiping] = useState(false);
   const [result, setResult] = useState<Result>("GO_BACK");
   useEffect(() => {
@@ -109,9 +109,9 @@ export default function GameCard(props: {
       setDeltaY(deltaY * multiplier);
 
       const timeSoFar = 1 / (swipeEvent.velocity / distanceSoFar);
-      const timeLeft = timeSoFar * multiplier - timeSoFar;
+      const timeLeft = Math.min(750, timeSoFar * multiplier - timeSoFar);
 
-      setTranslateDuration(timeLeft / 1000);
+      setTranslateDuration(timeLeft);
 
       setTimeout(() => {
         onNext(result);
@@ -125,7 +125,7 @@ export default function GameCard(props: {
       setTimeout(() => {
         const direction = answer === Answer.POSITIVE ? 1 : -1;
         setDeltaX(direction * (window.innerWidth / 2 + WIDTH));
-        setTranslateDuration(0.5);
+        setTranslateDuration(500);
         setTimeout(() => onNext(answer), 500);
       }, 300);
     },
@@ -141,10 +141,10 @@ export default function GameCard(props: {
       deltaX
     )}deg) scale(${isMounted ? 1 : 0.3})`,
     transition: getTransitions([
-      { property: "box-shadow", duration: 0.2 },
+      { property: "box-shadow", duration: 200 },
       { property: "transform", duration: isSwiping ? 0 : translateDuration },
-      { property: "opacity", duration: 0.5 },
-      { property: "scale", duration: 0.5 }
+      { property: "opacity", duration: 500 },
+      { property: "scale", duration: 500 }
     ]),
     opacity: isMounted ? 1 : 0
   };
@@ -166,7 +166,7 @@ export default function GameCard(props: {
           </span>
         ))}
       </div>
-      <div className="buttons">
+      <div>
         <button
           onClick={() => onButtonClick(Answer.NEGATIVE)}
           className={result === Answer.NEGATIVE ? "negative-active" : ""}

@@ -3,6 +3,10 @@
 body {
   background-color: #ebd8d0;
   font-family: "Barlow";
-  overflow: hidden;
   user-select: none;
+  padding-top: 70px;
+}
+
+body.inGame {
+  overflow: hidden;
 }

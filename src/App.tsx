@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Menubar from "./Menubar";
 import Game from "./Game";
 import Card from "./Card";
+import Results from "./Results";
+import { Answer } from "./types";
 
 type Screen = "START" | "GAME" | "RESULTS";
 
 function App() {
+  const [answers, setAnswers] = useState<Answer[] | null>(null);
   const [screen, setScreen] = useState<Screen>("START");
+
+  useEffect(() => {
+    if (screen === "GAME") {
+      document.body.classList.add("inGame");
+    } else {
+      document.body.classList.remove("inGame");
+    }
+  }, [screen]);
+
   return (
-    <div className="App">
+    <div className={`App ${screen === "GAME" && "inGame"}`}>
       <Menubar />
       {screen === "START" && (
         <Card>
@@ -26,7 +38,15 @@ function App() {
           <button onClick={() => setScreen("GAME")}>Los geht's!</button>
         </Card>
       )}
-      {screen === "GAME" && <Game onFinished={console.log} />}
+      {screen === "RESULTS" && answers && <Results answers={answers} />}
+      {screen === "GAME" && (
+        <Game
+          onFinished={answers => {
+            setAnswers(answers);
+            setScreen("RESULTS");
+          }}
+        />
+      )}
     </div>
   );
 }

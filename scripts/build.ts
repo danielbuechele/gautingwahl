@@ -14,15 +14,26 @@ const GOOGLE_SHEET = "1NDsL-MS7z2kELEdHZaEFDNz27mOlyecTVxkGVF6bASI";
 
   const data: Data = {
     questions: result.values.slice(1).map(([q, tags, ...rest]: string[]) => {
+      const answers = Object.values(Party).reduce(
+        (acc, party) => {
+          acc[party] = {
+            answer: Answer.POSITIVE,
+            explaination: "test"
+          };
+          return acc;
+        },
+        {} as {
+          [key in Party]: {
+            answer: Answer;
+            explaination: string;
+          };
+        }
+      );
+
       return {
         question: q,
         tags: [Tag.FINANZEN, Tag.BAUEN_WOHNEN], //tags.split(",").map(t => t.trim()),
-        answers: {
-          [Party.CSU]: {
-            answer: Answer.POSITIVE,
-            explaination: "test"
-          }
-        }
+        answers
       };
     })
   };

@@ -10,46 +10,25 @@
 
 .GameCard .question {
   flex-grow: 1;
-  padding: 15px;
 }
 
 .GameCard .question p {
-  font-size: 1.3em;
+  padding-bottom: 0;
 }
 
-.GameCard .buttons {
-  padding: 15px;
-}
-
-.GameCard button {
-  border: 2px solid #e5e5e5;
-  border-radius: 999em;
-  padding: 10px;
+.Card.GameCard button {
   font-size: 30px;
   width: 70px;
   height: 70px;
-  margin-left: 10px;
-  margin-right: 10px;
-  outline: none;
-  cursor: pointer;
+  padding: 0;
 }
 
-.GameCard button:hover,
-.GameCard button:active {
-  background-color: #e5e5e5;
-  transition: 0.1s all ease-out;
-}
-
-.GameCard button:active {
-  transform: scale(0.9);
-}
-
-.GameCard button.positive-active {
+.Card.GameCard button.positive-active {
   background-color: #6ace97;
   border-color: #6ace97;
 }
 
-.GameCard button.negative-active {
+.Card.GameCard button.negative-active {
   background-color: #f05e6c;
   border-color: #f05e6c;
 }
