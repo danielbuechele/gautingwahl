@@ -2,14 +2,14 @@ import React, { useState, useCallback, useRef } from "react";
 import "./Game.css";
 import GameCard from "./GameCard";
 import { Answer, Data } from "./types";
-const data: Data = require("./data.json");
 
 export default function Game(props: {
+  data: Data;
   onFinished: (answers: Answer[]) => void;
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const answers = useRef<Answer[]>([]);
-  const total = data.questions.length;
+  const total = props.data.questions.length;
   const { onFinished } = props;
 
   const onNext = useCallback(
@@ -30,8 +30,8 @@ export default function Game(props: {
         onNext={onNext}
         number={currentQuestion + 1}
         total={total}
-        question={data.questions[currentQuestion].question}
-        tags={data.questions[currentQuestion].tags}
+        question={props.data.questions[currentQuestion].question}
+        tags={props.data.questions[currentQuestion].tags}
       />
       <button className="skip" onClick={() => onNext(Answer.NEUTRAL)}>
         überspringen

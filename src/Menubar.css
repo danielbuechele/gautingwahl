@@ -4,6 +4,7 @@
   height: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
   z-index: 2;
