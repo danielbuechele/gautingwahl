@@ -1,4 +1,4 @@
-name: github pages
+name: Github Pages deployment
 
 on:
   push:
@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
+        
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
