@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "data": "TS_NODE_PROJECT='./scripts/tsconfig.json' ts-node ./scripts/build.ts",
+    "data": "TS_NODE_PROJECT='./tsconfig-scripts.json' ts-node ./scripts/build.ts",
     "build": "yarn data && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
