@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import "./Game.css";
 import GameCard from "./GameCard";
+import mixpanel from "mixpanel-browser";
 import AnswerEmoji from "./AnswerEmoji";
 import { Answer, Data, Screen } from "./types";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -15,9 +16,14 @@ export default function Game(props: { data: Data }) {
   const onNext = useCallback(
     (answer: Answer) => {
       setAnswer(answer);
+      mixpanel.track("answer", {
+        question: currentQuestion,
+        result: Answer[answer]
+      });
       if (currentQuestion < total - 1) {
         history.push(Screen.QUESTION + `/${currentQuestion + 2}`);
       } else {
+        mixpanel.track("finished");
         history.push(Screen.RESUTLS);
       }
     },
