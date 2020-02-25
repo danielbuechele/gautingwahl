@@ -37,13 +37,13 @@
 .GameCard .info {
   border-bottom: 1px solid #e5e5e5;
   padding: 10px;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 0.9em;
 }
 
 .GameCard .tag {
   background: #e5e5e5;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 600;
   border-radius: 999em;
   font-size: 0.9em;

@@ -17,7 +17,7 @@
 
 .Menubar h1 {
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .Menubar h1 em {
@@ -38,7 +38,7 @@
   background-color: transparent;
   border: 2px solid #e5e5e5;
   border-radius: 999em;
-  font-weight: bold;
+  font-weight: 600;
   padding: 4px 20px 5px;
   font-family: inherit;
   font-size: inherit;
