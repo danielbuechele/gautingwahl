@@ -1,0 +1,25 @@
+.Weight p {
+  text-align: center;
+}
+
+.Weight ul {
+  margin: 0;
+  padding: 25px;
+  padding-top: 0;
+  text-align: center;
+}
+
+.Weight li {
+  display: inline-block;
+  list-style: none;
+  margin: 5px;
+}
+
+.Weight li button {
+  width: auto;
+  margin: 0;
+}
+
+.Weight li button.active {
+  background-color: #e5e5e5;
+}

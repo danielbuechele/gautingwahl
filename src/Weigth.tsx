@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./Weight.css";
-import Card from "./Card";
-import { Tag } from "./types";
+import ContentCard from "./ContentCard";
+import { Tag, Screen } from "./types";
+import { useHistory } from "react-router-dom";
 
-function App() {
-  const [priority, setPriority] = useState();
+const MAX_WEIGHTS = 3;
+
+export default function Weight() {
+  const history = useHistory();
+  const [priorities, setPriorities] = useState<Set<Tag>>(new Set());
+
+  const togglePriority = useCallback(
+    (tag: Tag) => {
+      const newPriorities = new Set(Array.from(priorities.values()));
+      if (!newPriorities.has(tag) && newPriorities.size < MAX_WEIGHTS) {
+        newPriorities.add(tag);
+      } else {
+        newPriorities.delete(tag);
+      }
+      setPriorities(newPriorities);
+    },
+    [priorities]
+  );
+
   return (
-    <Card>
+    <ContentCard className="Weight">
       <h2>Gewichtung</h2>
-      <p>Welche Themen sind die besonders wichtig?</p>
+      <p>
+        Wähle bis zu {MAX_WEIGHTS} Themen aus die dir besonders wichtig sind.
+        Übereinstimmungen in diesen Themen werden doppelt gewertet.
+      </p>
       <ul>
         {Object.values(Tag).map(tag => (
           <li>
-            <button>{tag}</button>
+            <button
+              onClick={() => togglePriority(tag)}
+              className={priorities.has(tag) ? "active" : ""}
+            >
+              {tag}
+            </button>
           </li>
         ))}
       </ul>
-    </Card>
+      <button className="primary" onClick={() => history.push(Screen.RESUTLS)}>
+        Zum Ergebnis
+      </button>
+    </ContentCard>
   );
 }
-
-export default App;

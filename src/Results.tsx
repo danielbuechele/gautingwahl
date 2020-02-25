@@ -1,7 +1,8 @@
-import React from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState } from "react";
 import "./Results.css";
 import ContentCard from "./ContentCard";
-import { Data, Party } from "./types";
+import { Data, Party, Answer, Question } from "./types";
 import { useAnswers } from "./useAnswers";
 import AnswerEmoji from "./AnswerEmoji";
 
@@ -12,7 +13,7 @@ const LOGOS = Object.values(Party).reduce(
 
 export default function Results(props: { data: Data }) {
   const [answers] = useAnswers();
-  const total = props.data.questions.length;
+  const totalAnswered = answers.filter(a => a !== Answer.NEUTRAL).length;
 
   const results: Array<{
     party: Party;
@@ -22,11 +23,12 @@ export default function Results(props: { data: Data }) {
       party,
       percentage:
         props.data.questions.reduce((sum, q, i) => {
-          if (q.answers[party].answer === answers[i]) {
+          const answer = q.answers[party].answer;
+          if (answer === answers[i] && answer !== Answer.NEUTRAL) {
             sum++;
           }
           return sum;
-        }, 0) / total
+        }, 0) / totalAnswered
     }))
     .sort((a, b) => b.percentage - a.percentage);
 
@@ -48,38 +50,64 @@ export default function Results(props: { data: Data }) {
         <h2>Details</h2>
         <ol>
           {props.data.questions.map((q, i) => (
-            <li key={i}>
-              <h3>
-                {i + 1}) {q.question}
-              </h3>
-              <ul>
-                <li className="answer">
-                  <AnswerEmoji value={answers[i]} />
-                  <strong>Deine Antwort</strong>
-                </li>
-                {Object.values(Party).map(party => (
-                  <li
-                    key={party}
-                    className={`answer ${
-                      q.answers[party].answer !== answers[i] ? "different" : ""
-                    }`}
-                  >
-                    <AnswerEmoji value={q.answers[party].answer} />
-                    <div>
-                      <strong>{party}</strong>
-                      {q.answers[party].explanation && (
-                        <span className="explanation">
-                          {q.answers[party].explanation}
-                        </span>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </li>
+            <QuestionResult
+              key={i}
+              value={q}
+              userAnswer={answers[i]}
+              index={i + 1}
+            />
           ))}
         </ol>
       </ContentCard>
     </>
+  );
+}
+
+function QuestionResult(props: {
+  value: Question;
+  userAnswer: Answer;
+  index: number;
+}) {
+  const [open, setOpen] = useState<boolean>(false);
+  const { value, userAnswer, index } = props;
+
+  return (
+    <li className={`QuestionResult ${open ? "isOpen" : ""}`}>
+      <a onClick={() => setOpen(!open)}>
+        <h3>
+          {index}) {value.question}
+        </h3>
+        <span className="icon">⌃</span>
+      </a>
+      {open && (
+        <ul>
+          <li className="answer">
+            <AnswerEmoji value={userAnswer} />
+            <strong>Deine Antwort</strong>
+          </li>
+          {Object.values(Party).map(party => (
+            <li
+              key={party}
+              className={`answer ${
+                value.answers[party].answer === Answer.NEUTRAL ||
+                value.answers[party].answer !== userAnswer
+                  ? "different"
+                  : ""
+              }`}
+            >
+              <AnswerEmoji value={value.answers[party].answer} />
+              <div>
+                <strong>{party}</strong>
+                {value.answers[party].explanation && (
+                  <span className="explanation">
+                    {value.answers[party].explanation}
+                  </span>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
   );
 }

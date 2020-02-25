@@ -23,7 +23,8 @@ export enum Answer {
 export enum Screen {
   START = "/",
   INFO = "/info",
-  RESUTLS = "/results",
+  WEIGHT = "/gewichtung",
+  RESUTLS = "/ergebnis",
   QUESTION = "/these"
 }
 
@@ -34,10 +35,12 @@ export type AnswerGroup = {
   };
 };
 
+export type Question = {
+  question: string;
+  tags: Tag[];
+  answers: AnswerGroup;
+};
+
 export type Data = {
-  questions: Array<{
-    question: string;
-    tags: Tag[];
-    answers: AnswerGroup;
-  }>;
+  questions: Array<Question>;
 };

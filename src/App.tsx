@@ -8,6 +8,7 @@ import Welcome from "./Welcome";
 import mixpanel from "mixpanel-browser";
 import Info from "./Info";
 import { Switch, Route, useLocation } from "react-router-dom";
+import Weight from "./Weigth";
 const data: Data = require("./data.json");
 
 mixpanel.init("4c4511d62e6eb4cf788020022ee93179");
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path={Screen.QUESTION}>
           <Game data={data} />
+        </Route>
+        <Route path={Screen.WEIGHT}>
+          <Weight />
         </Route>
         <Route path={Screen.START}>
           <Welcome total={data.questions.length} />
