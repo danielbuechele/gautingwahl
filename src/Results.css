@@ -44,11 +44,9 @@
 }
 
 .QuestionResult .answer .emoji {
-  flex-shrink: 0;
-  position: relative;
-  top: -0.2em;
   font-size: 1.3em;
-  width: 1.3em;
+  margin-right: 6px;
+  position: relative;
 }
 
 .QuestionResult button {

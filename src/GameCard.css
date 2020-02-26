@@ -22,6 +22,8 @@
   height: 70px;
   padding: 0;
   margin: 30px 15px;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .Card.GameCard button.positive-active {

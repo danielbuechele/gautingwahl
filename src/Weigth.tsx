@@ -5,23 +5,50 @@ import { Tag, Screen } from "./types";
 import { useHistory } from "react-router-dom";
 
 const MAX_WEIGHTS = 3;
+const TAG_MAP = Object.entries(Tag).reduce(
+  (acc, [k, v]) => acc.set(v, k as any),
+  new Map<Tag, keyof typeof Tag>()
+);
+
+export function useWeights(): [Set<Tag>, (tag: Tag) => void] {
+  const storageKey = "weights";
+
+  type T = keyof typeof Tag;
+  const init = (sessionStorage.getItem(storageKey)?.split(",") as
+    | T[]
+    | undefined)?.map(t => Tag[t]);
+
+  const [weights, _setWeights] = useState<Set<Tag>>(new Set(init));
+
+  const toggleWeight = useCallback(
+    (tag: Tag) => {
+      const newWeights = new Set(Array.from(weights.values()));
+      if (!newWeights.has(tag) && newWeights.size < MAX_WEIGHTS) {
+        newWeights.add(tag);
+      } else {
+        newWeights.delete(tag);
+      }
+
+      _setWeights(newWeights);
+      sessionStorage.setItem(
+        storageKey,
+        Array.from(newWeights)
+          .map((w: Tag) => TAG_MAP.get(w))
+          .join(",")
+      );
+    },
+    [weights]
+  );
+
+  return [weights, toggleWeight];
+}
 
 export default function Weight() {
   const history = useHistory();
-  const [priorities, setPriorities] = useState<Set<Tag>>(new Set());
-
-  const togglePriority = useCallback(
-    (tag: Tag) => {
-      const newPriorities = new Set(Array.from(priorities.values()));
-      if (!newPriorities.has(tag) && newPriorities.size < MAX_WEIGHTS) {
-        newPriorities.add(tag);
-      } else {
-        newPriorities.delete(tag);
-      }
-      setPriorities(newPriorities);
-    },
-    [priorities]
-  );
+  const [weights, toggleWeight] = useWeights();
+  const onFinish = useCallback(() => {
+    history.push(Screen.RESUTLS);
+  }, [history]);
 
   return (
     <ContentCard className="Weight">
@@ -32,17 +59,17 @@ export default function Weight() {
       </p>
       <ul>
         {Object.values(Tag).map(tag => (
-          <li>
+          <li key={tag}>
             <button
-              onClick={() => togglePriority(tag)}
-              className={priorities.has(tag) ? "active" : ""}
+              onClick={() => toggleWeight(tag)}
+              className={weights.has(tag) ? "active" : ""}
             >
               {tag}
             </button>
           </li>
         ))}
       </ul>
-      <button className="primary" onClick={() => history.push(Screen.RESUTLS)}>
+      <button className="primary" onClick={onFinish}>
         Zum Ergebnis
       </button>
     </ContentCard>

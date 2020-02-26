@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Results.css";
 import ContentCard from "./ContentCard";
 import { Data, Party, Answer, Question } from "./types";
 import { useAnswers } from "./useAnswers";
 import AnswerEmoji from "./AnswerEmoji";
+import log from "./log";
+import { useWeights } from "./Weigth";
 
 const LOGOS = Object.values(Party).reduce(
   (acc, party, i) => acc.set(party, `/party${i}.svg`),
@@ -13,23 +15,34 @@ const LOGOS = Object.values(Party).reduce(
 
 export default function Results(props: { data: Data }) {
   const [answers] = useAnswers();
+  const [weights] = useWeights();
+  useEffect(() => {
+    log("resultsRendered", { answers, weights: Array.from(weights) });
+  }, [answers, weights]);
   const totalAnswered = answers.filter(a => a !== Answer.NEUTRAL).length;
-
   const results: Array<{
     party: Party;
     percentage: number;
   }> = Object.values(Party)
-    .map(party => ({
-      party,
-      percentage:
-        props.data.questions.reduce((sum, q, i) => {
-          const answer = q.answers[party].answer;
-          if (answer === answers[i] && answer !== Answer.NEUTRAL) {
-            sum++;
-          }
-          return sum;
-        }, 0) / totalAnswered
-    }))
+    .map(party => {
+      let base = totalAnswered;
+      return {
+        party,
+        percentage:
+          props.data.questions.reduce((sum, q, i) => {
+            const answer = q.answers[party].answer;
+            if (answer === answers[i] && answer !== Answer.NEUTRAL) {
+              if (q.tags.some(t => weights.has(t))) {
+                sum += 2;
+                base++;
+              } else {
+                sum++;
+              }
+            }
+            return sum;
+          }, 0) / base
+      };
+    })
     .sort((a, b) => b.percentage - a.percentage);
 
   return (

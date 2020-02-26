@@ -11,7 +11,12 @@ export enum Party {
 export enum Tag {
   VERKEHR = "🚗 Verkehr",
   BAUEN_WOHNEN = "🏡 Bauen & Wohnen",
-  FINANZEN = "💰 Finanzen"
+  FINANZEN = "💰 Finanzen",
+  DIGITALES = "💻 Digital",
+  SOZIALES = "🤝 Soziales",
+  UMWELT = "🌳 Umwelt",
+  BILDUNG = "🎓 Bildung",
+  GEWERBE = "🏢 Gewerbe"
 }
 
 export enum Answer {

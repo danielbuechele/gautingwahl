@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import "./Game.css";
 import GameCard from "./GameCard";
-import mixpanel from "mixpanel-browser";
 import AnswerEmoji from "./AnswerEmoji";
 import { Answer, Data, Screen } from "./types";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { useAnswer } from "./useAnswers";
+import log from "./log";
 
 export default function Game(props: { data: Data }) {
   const total = props.data.questions.length;
@@ -16,15 +16,15 @@ export default function Game(props: { data: Data }) {
   const onNext = useCallback(
     (answer: Answer) => {
       setAnswer(answer);
-      mixpanel.track("answer", {
+      log("answer", {
         question: currentQuestion,
         result: Answer[answer]
       });
       if (currentQuestion < total - 1) {
         history.push(Screen.QUESTION + `/${currentQuestion + 2}`);
       } else {
-        mixpanel.track("finished");
-        history.push(Screen.RESUTLS);
+        log("finished");
+        history.push(Screen.WEIGHT);
       }
     },
     [setAnswer, currentQuestion, total, history]
@@ -49,7 +49,7 @@ export default function Game(props: { data: Data }) {
         }}
       >
         <AnswerEmoji value={Answer.NEUTRAL} />
-        These überspringen
+        &nbsp; These überspringen
       </button>
     </>
   );

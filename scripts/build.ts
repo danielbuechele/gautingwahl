@@ -37,7 +37,7 @@ const GOOGLE_SHEET = "1NDsL-MS7z2kELEdHZaEFDNz27mOlyecTVxkGVF6bASI";
 
       return {
         question: q,
-        tags: [Tag.FINANZEN, Tag.BAUEN_WOHNEN], //tags.split(",").map(t => t.trim()),
+        tags: tags.split(",").map(t => Tag[t.trim()]),
         answers
       };
     })
