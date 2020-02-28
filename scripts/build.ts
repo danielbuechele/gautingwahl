@@ -39,7 +39,10 @@ type T = keyof typeof Tag;
           return acc;
         }, {} as AnswerGroup);
 
-        const cleanTags = tags.split(",").map(s => s.trim()) as T[];
+        const cleanTags = tags
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean) as T[];
 
         return {
           question: q,
