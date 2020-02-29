@@ -1,0 +1,45 @@
+.Info {
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+.Info p {
+  font-size: 1em;
+  margin-bottom: 0px;
+  padding-bottom: 0;
+}
+
+.Info a {
+  color: #f05e6c;
+  text-decoration: none;
+}
+
+.Info .photo {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.Info .logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Info .logos .logo {
+  margin: 10px;
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.Info .logos .logo:first-child {
+  margin-left: 0;
+}
+
+.Info .logos .logo:last-child {
+  margin-right: 0;
+}
+
+.Info .logos .logo img {
+  max-width: 100%;
+}

@@ -49,6 +49,13 @@ export default function Results(props: { data: Data }) {
     <>
       <ContentCard className="Results">
         <h2>Ergebnis</h2>
+        {totalAnswered / props.data.questions.length < 0.5 && (
+          <p>
+            <span role="img" aria-label="Achtung"></span>⚠️ Du hast weniger als
+            die Hälfte der Thesen beantwortet. Daher ist das Ergebnis wenig
+            aussagekräftig.
+          </p>
+        )}
         <ol>
           {results.map(({ party, percentage }) => (
             <li key={party} className="ResultRow">

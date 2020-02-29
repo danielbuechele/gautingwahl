@@ -22,6 +22,7 @@
   font-size: 1.3em;
   padding: 15px 20px;
   padding-top: 0;
+  hyphens: auto;
 }
 
 .Card button {
