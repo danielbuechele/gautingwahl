@@ -20,7 +20,7 @@ export default function Info() {
             target="_blank"
             href="https://www.gauting.de/rathaus-und-verwaltung/kommunale-politik/jugendreferenten/"
           >
-            Judengbeirat
+            Jugendbeirat
           </a>{" "}
           der Gemeinde Gauting zur Kommunalwahl 2020 bereit gestellt und soll
           Wähler*innen dabei helfen zu sehen mit welcher Partei sie die größte

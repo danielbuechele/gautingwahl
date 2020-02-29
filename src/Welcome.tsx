@@ -26,8 +26,8 @@ export default function Welcome(props: { total: number }) {
     <Card {...handlers} style={style}>
       <h2>Willkommen</h2>
       <p>
-        Beim Themen-Check des Jugendbeirats zur Kommunalwahl 2020 in Gauting
-        kannst du {props.total} Thesen beantworten und sehen mit welcher der{" "}
+        Am 15. März 2020 wird in Gauting der Gemeinderat gewählt. Hier kannst du{" "}
+        {props.total} Thesen beantworten und sehen mit welcher der{" "}
         {Object.keys(Party).length} Parteien du am meisten übereinstimmst.
       </p>
       <div>
