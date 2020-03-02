@@ -15,7 +15,6 @@ export enum Tag {
   DIGITALES = "💻 Digital",
   SOZIALES = "🤝 Soziales",
   UMWELT = "🌳 Umwelt",
-  BILDUNG = "🎓 Bildung",
   GEWERBE = "🏢 Gewerbe",
   VERWALTUNG = "🏛 Verwaltung"
 }
