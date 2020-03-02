@@ -13,6 +13,6 @@ export default function AnswerEmoji(props: { value: Answer }) {
       />
     );
   } else {
-    return <img alt="neutral" className="emoji" src="/emoji_question.png" />;
+    return <img alt="neutral" className="emoji" src="/emoji_shrug.png" />;
   }
 }

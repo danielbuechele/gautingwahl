@@ -21,5 +21,7 @@
 }
 
 .Weight li button.active {
-  background-color: #e5e5e5;
+  background-color: #1d7cee;
+  color: white;
+  border-color: #1d7cee;
 }
