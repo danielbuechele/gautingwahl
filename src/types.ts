@@ -16,7 +16,8 @@ export enum Tag {
   SOZIALES = "🤝 Soziales",
   UMWELT = "🌳 Umwelt",
   BILDUNG = "🎓 Bildung",
-  GEWERBE = "🏢 Gewerbe"
+  GEWERBE = "🏢 Gewerbe",
+  VERWALTUNG = "🏛 Verwaltung"
 }
 
 export enum Answer {
