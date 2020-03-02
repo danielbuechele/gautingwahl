@@ -10,23 +10,20 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-        
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
-            
+          node-version: "12.x"
+
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        
+
       - run: yarn install
-        
-      - name: Get data
-        run: REACT_APP_GOOGLE_API_KEY=${{ secrets.ACTIONS_GOOGLE_API_KEY }} yarn data
-      
-      - run: yarn build
-        
+
+      - run: REACT_APP_GOOGLE_API_KEY=${{ secrets.ACTIONS_GOOGLE_API_KEY }} yarn build
+
       - name: Copy CNAME file
         run: cp ./CNAME ./build/CNAME
 
