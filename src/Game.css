@@ -1,4 +1,4 @@
-button.skip {
+button.neutral {
   background: white;
   border-radius: 999em;
   font-size: 15px;
@@ -17,11 +17,11 @@ button.skip {
   white-space: nowrap;
 }
 
-button.skip:hover {
+button.neutral:hover {
   cursor: pointer;
   background-color: #f5f5f5;
 }
 
-button.skip:active {
+button.neutral:active {
   transform: translateX(-50%) scale(0.95);
 }

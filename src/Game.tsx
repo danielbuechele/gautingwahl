@@ -42,14 +42,14 @@ export default function Game(props: { data: Data }) {
         value={answer}
       />
       <button
-        className="skip"
+        className="neutral"
         onClick={() => {
           setAnswer(Answer.NEUTRAL);
           setTimeout(() => onNext(Answer.NEUTRAL), 300);
         }}
       >
         <AnswerEmoji value={Answer.NEUTRAL} />
-        &nbsp; These überspringen
+        &nbsp; Neutral
       </button>
     </>
   );

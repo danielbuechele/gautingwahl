@@ -19,7 +19,7 @@ export default function Results(props: { data: Data }) {
   useEffect(() => {
     log("resultsRendered", { answers, weights: Array.from(weights) });
   }, [answers, weights]);
-  const totalAnswered = answers.filter(a => a !== Answer.NEUTRAL).length;
+  const totalAnswered = answers.length;
   const results: Array<{
     party: Party;
     percentage: number;
@@ -31,7 +31,7 @@ export default function Results(props: { data: Data }) {
         percentage:
           props.data.questions.reduce((sum, q, i) => {
             const answer = q.answers[party].answer;
-            if (answer === answers[i] && answer !== Answer.NEUTRAL) {
+            if (answer === answers[i]) {
               if (q.tags.some(t => weights.has(t))) {
                 sum += 2;
                 base++;
@@ -109,10 +109,7 @@ function QuestionResult(props: {
             <li
               key={party}
               className={`answer ${
-                value.answers[party].answer === Answer.NEUTRAL ||
-                value.answers[party].answer !== userAnswer
-                  ? "different"
-                  : ""
+                value.answers[party].answer !== userAnswer ? "different" : ""
               }`}
             >
               <AnswerEmoji value={value.answers[party].answer} />
